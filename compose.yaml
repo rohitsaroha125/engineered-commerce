@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  frontend:
+    depends_on: 
+      - backend
+    environment:
+      - API_URL=http://localhost:8000
+    build: ./frontend
+    ports:
+      - 3000:3000
+    watch:
+      - path: ./frontend/package.json
+        action: rebuild
+      - path: ./frontend/package-lock.json
+        action: rebuild
+      - path: ./frontend
+        target: /app
+        action: sync
+
+  admin:
+    depends_on: 
+      - backend
+    environment:
+      - API_URL=http://localhost:8000
+    build: ./admin
+    ports:
+      - 3000:3000
+    watch:
+      - path: ./admin/package.json
+        action: rebuild
+      - path: ./admin/package-lock.json
+        action: rebuild
+      - path: ./admin
+        target: /app
+        action: sync
+
+  backend:
+    depends_on: 
+      - db
+    environment:
+      - PORT=8000
+      - DB_URL=postgresql://rohit:secret123@postgres:5432/myapp
+    build: ./backend
+    ports:
+      - 3000:3000
+    watch:
+      - path: ./backend/package.json
+        action: rebuild
+      - path: ./backend/package-lock.json
+        action: rebuild
+      - path: ./backend
+        target: /app
+        action: sync
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: rohit
+      POSTGRES_PASSWORD: secret123
+      POSTGRES_DB: myapp
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/postgres_data/db/data
+
+volumes:
+  postgres_data:
+
+  
