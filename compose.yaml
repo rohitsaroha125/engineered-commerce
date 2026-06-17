@@ -51,7 +51,7 @@ services:
         - path: ./backend/package-lock.json
           action: rebuild
         - path: ./backend
-          target: ./
+          target: /app
           action: sync
 
   db:

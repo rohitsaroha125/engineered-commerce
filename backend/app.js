@@ -5,6 +5,8 @@ const app = express();
 
 const port = process.env.PORT || 8010;
 
+console.log("everything working fine");
+
 app.get("/", (req, res) => {
   res.send("Welcome to backend");
 });
