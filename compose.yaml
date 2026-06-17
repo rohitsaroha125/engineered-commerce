@@ -40,7 +40,7 @@ services:
       - db
     environment:
       - PORT=8010
-      - DB_URL=postgresql://rohit:secret123@postgres:5432/myapp
+      - DATABASE_URL=postgresql://rohit:secret123@db:5432/myapp
     build: ./backend
     ports:
       - 8010:8010
