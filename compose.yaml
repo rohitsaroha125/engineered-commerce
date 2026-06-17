@@ -1,39 +1,39 @@
 services:
-  frontend:
-    depends_on: 
-      - backend
-    environment:
-      - API_URL=http://localhost:8000
-    build: ./frontend
-    ports:
-      - 8001:8001
-    develop:
-      watch:
-        - path: ./frontend/package.json
-          action: rebuild
-        - path: ./frontend/package-lock.json
-          action: rebuild
-        - path: ./frontend
-          target: /app
-          action: sync
+  # frontend:
+  #   depends_on: 
+  #     - backend
+  #   environment:
+  #     - API_URL=http://localhost:8000
+  #   build: ./frontend
+  #   ports:
+  #     - 8001:8001
+  #   develop:
+  #     watch:
+  #       - path: ./frontend/package.json
+  #         action: rebuild
+  #       - path: ./frontend/package-lock.json
+  #         action: rebuild
+  #       - path: ./frontend
+  #         target: /app
+  #         action: sync
 
-  admin:
-    depends_on: 
-      - backend
-    environment:
-      - API_URL=http://localhost:8000
-    build: ./admin
-    ports:
-      - 8002:8002
-    develop:
-      watch:
-        - path: ./admin/package.json
-          action: rebuild
-        - path: ./admin/package-lock.json
-          action: rebuild
-        - path: ./admin
-          target: /app
-          action: sync
+  # admin:
+  #   depends_on: 
+  #     - backend
+  #   environment:
+  #     - API_URL=http://localhost:8000
+  #   build: ./admin
+  #   ports:
+  #     - 8002:8002
+  #   develop:
+  #     watch:
+  #       - path: ./admin/package.json
+  #         action: rebuild
+  #       - path: ./admin/package-lock.json
+  #         action: rebuild
+  #       - path: ./admin
+  #         target: /app
+  #         action: sync
 
   backend:
     depends_on: 

@@ -4,6 +4,7 @@ import userRoutes from "./routes/userRoutes.ts";
 import productRoutes from "./routes/productRoutes.ts"
 import categoryRoutes from "./routes/categoryRoutes.ts"
 import orderRoutes from "./routes/orderRoutes.ts"
+import { rateLimit } from 'express-rate-limit'
 
 const app = express();
 app.use(express.json());
@@ -14,14 +15,18 @@ app.use(
 );
 const port = process.env.PORT || 8010;
 
-console.log("everything working fine");
+const limiter = rateLimit({
+  limit: 2,
+  windowMs: 15 * 60 * 1000,
+  message: "Too many requests"
+})
 
 app.get("/", (req, res) => {
   res.send("Welcome to backend");
 });
 
 app.use("/user", userRoutes);
-app.use("/products", productRoutes)
+app.use("/products", limiter, productRoutes)
 app.use("/category", categoryRoutes)
 app.use("/orders", orderRoutes)
 
