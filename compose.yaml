@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   frontend:
     depends_on: 
@@ -8,15 +6,16 @@ services:
       - API_URL=http://localhost:8000
     build: ./frontend
     ports:
-      - 3000:3000
-    watch:
-      - path: ./frontend/package.json
-        action: rebuild
-      - path: ./frontend/package-lock.json
-        action: rebuild
-      - path: ./frontend
-        target: /app
-        action: sync
+      - 8001:8001
+    develop:
+      watch:
+        - path: ./frontend/package.json
+          action: rebuild
+        - path: ./frontend/package-lock.json
+          action: rebuild
+        - path: ./frontend
+          target: /app
+          action: sync
 
   admin:
     depends_on: 
@@ -25,33 +24,35 @@ services:
       - API_URL=http://localhost:8000
     build: ./admin
     ports:
-      - 3000:3000
-    watch:
-      - path: ./admin/package.json
-        action: rebuild
-      - path: ./admin/package-lock.json
-        action: rebuild
-      - path: ./admin
-        target: /app
-        action: sync
+      - 8002:8002
+    develop:
+      watch:
+        - path: ./admin/package.json
+          action: rebuild
+        - path: ./admin/package-lock.json
+          action: rebuild
+        - path: ./admin
+          target: /app
+          action: sync
 
   backend:
     depends_on: 
       - db
     environment:
-      - PORT=8000
+      - PORT=8010
       - DB_URL=postgresql://rohit:secret123@postgres:5432/myapp
     build: ./backend
     ports:
-      - 3000:3000
-    watch:
-      - path: ./backend/package.json
-        action: rebuild
-      - path: ./backend/package-lock.json
-        action: rebuild
-      - path: ./backend
-        target: /app
-        action: sync
+      - 8010:8010
+    develop:
+      watch:
+        - path: ./backend/package.json
+          action: rebuild
+        - path: ./backend/package-lock.json
+          action: rebuild
+        - path: ./backend
+          target: ./
+          action: sync
 
   db:
     image: postgres:latest
