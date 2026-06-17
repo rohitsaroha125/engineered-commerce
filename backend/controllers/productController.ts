@@ -28,4 +28,22 @@ const getProducts = async (req, res, next) => {
     }
 }
 
-export {getProducts}
+const singleProduct = async (req, res, next) => {
+    try{
+        const {id} = req.params
+        const product = await prisma.product.findUnique({
+            where: {
+                id: Number(id)
+            }
+        })
+
+        res.status(200).json({
+            ok: true,
+            product
+        })
+    } catch(err) {
+        next(err)
+    }
+}
+
+export {getProducts, singleProduct}

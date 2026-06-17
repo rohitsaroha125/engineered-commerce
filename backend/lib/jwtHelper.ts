@@ -1,4 +1,4 @@
-import * as jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
 function jwtSign(data: any): string {
     const secret = process.env.JWT_SECRET_KEY

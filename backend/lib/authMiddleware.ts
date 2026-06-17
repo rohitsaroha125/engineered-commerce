@@ -1,4 +1,4 @@
-import * as jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
 // augment Express Request type to include `user`
 declare global {
