@@ -36,3 +36,11 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`Running on port ${port}`);
 });
+
+process.on("unhandledRejection", (err: {name: string, message: string}) => {
+  console.log("Err is ", err.name, " ", err.message)
+})
+
+process.on("uncaughtException", (err:{name: string, message: string}) => {
+  console.log("Err is ", err.name, " ", err.message)
+})

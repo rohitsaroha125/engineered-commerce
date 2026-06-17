@@ -1,15 +1,22 @@
 import { prisma } from "../lib/prisma.ts";
 import type { Request, Response, NextFunction } from "express";
-
+import bcrypt from "bcryptjs";
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const {name, email, password} = req.body
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
     const user = await prisma.user.create({data: {
       name,
       email,
-      password
-    }});
+      password: hash
+    },
+    select:{
+      name: true,
+      email: true
+    }
+  });
     res.status(200).json({
       ok: true,
       user,
@@ -26,7 +33,7 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 const login = async(req, res, next) => {
   try{
     const {email, password} = req.body
-    const user = await prisma.user.findUnique({
+    const user: any = await prisma.user.findUnique({
       where: {email}
     })
 
@@ -36,7 +43,8 @@ const login = async(req, res, next) => {
       return next(err)
     }
 
-    const passwordMatch = user?.password === password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
     if (!passwordMatch) {
       const err:any = new Error("Email/Password wrong")
       err.statusCode = 401
