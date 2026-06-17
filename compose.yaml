@@ -41,6 +41,7 @@ services:
     environment:
       - PORT=8010
       - DATABASE_URL=postgresql://rohit:secret123@db:5432/myapp
+      - JWT_SECRET_KEY=hello_there_jwt_scret_see_this
     build: ./backend
     ports:
       - 8010:8010

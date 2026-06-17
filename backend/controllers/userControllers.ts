@@ -1,8 +1,8 @@
 import { prisma } from "../lib/prisma.ts";
-import type { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
+import jwtSign from "../lib/jwtHelper.ts";
 
-const register = async (req: Request, res: Response, next: NextFunction) => {
+const register = async (req, res, next) => {
   try {
     const {name, email, password} = req.body
     const salt = await bcrypt.genSalt(10);
@@ -13,13 +13,16 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
       password: hash
     },
     select:{
+      id: true,
       name: true,
       email: true
     }
   });
+    const token = jwtSign(user)
     res.status(200).json({
       ok: true,
       user,
+      token
     });
   } catch (err) {
     console.log("error is ", err)
@@ -51,9 +54,16 @@ const login = async(req, res, next) => {
       return next(err)
     }
 
+    const token = jwtSign(user)
+
     res.status(201).json({
       ok: true,
-      data: user
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email
+      },
+      token
     })
   }catch(err){
     next(err)

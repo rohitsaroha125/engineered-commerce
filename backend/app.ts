@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes.ts";
+import productRoutes from "./routes/productRoutes.ts"
+import authMiddleware from "./lib/authMiddleware.ts";
 
 const app = express();
 app.use(express.json());
@@ -18,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRoutes);
+app.use("/products", productRoutes)
 
 app.use((req, res, next) => {
   const err: any = new Error("Route not found")
