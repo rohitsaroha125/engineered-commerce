@@ -1,9 +1,10 @@
 import express from "express";
 import cors from "cors";
-import userRoutes from "./routes/userRoutes.ts";
-import productRoutes from "./routes/productRoutes.ts"
-import categoryRoutes from "./routes/categoryRoutes.ts"
-import orderRoutes from "./routes/orderRoutes.ts"
+import userRoutes from "./routes/userRoutes.js";
+import productRoutes from "./routes/productRoutes.js"
+import categoryRoutes from "./routes/categoryRoutes.js"
+import orderRoutes from "./routes/orderRoutes.js"
+import { Request, Response, NextFunction } from "express";
 import { rateLimit } from 'express-rate-limit'
 
 const app = express();
@@ -36,13 +37,15 @@ app.use((req, res, next) => {
   next(err)
 })
 
-app.use((err, req, res, next) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   err.statusCode = err.statusCode || 500
   res.status(err.statusCode).json({
     ok: false,
     message: err.message
   })
 })
+
+export default app;
 
 app.listen(port, () => {
   console.log(`Running on port ${port}`);

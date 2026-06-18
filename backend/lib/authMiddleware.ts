@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken"
+import { Request, Response, NextFunction } from "express";
 
 // augment Express Request type to include `user`
 declare global {
@@ -9,7 +10,7 @@ declare global {
   }
 }
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     try{
         const headers = req.headers.authorization
         if (!headers) {

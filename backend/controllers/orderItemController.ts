@@ -1,6 +1,7 @@
-import { prisma } from "../lib/prisma.ts";
+import { prisma } from "../lib/prisma.js";
+import { Request, Response, NextFunction } from "express";
 
-const addOrder = async (req, res, next) => {
+const addOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.user;
     const items = req.body;
@@ -13,7 +14,7 @@ const addOrder = async (req, res, next) => {
       });
 
       const orderItems = await tx.orderItems.createMany({
-        data: items.map((item) => ({
+        data: items.map((item: any) => ({
           ...item,
           orderId: order.id,
         })),

@@ -1,8 +1,9 @@
-import { prisma } from "../lib/prisma.ts";
+import { prisma } from "../lib/prisma.js";
 import bcrypt from "bcryptjs";
-import jwtSign from "../lib/jwtHelper.ts";
+import jwtSign from "../lib/jwtHelper.js";
+import { Request, Response, NextFunction } from "express";
 
-const register = async (req, res, next) => {
+const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const {name, email, password} = req.body
     const salt = await bcrypt.genSalt(10);
@@ -33,7 +34,7 @@ const register = async (req, res, next) => {
   }
 };
 
-const login = async(req, res, next) => {
+const login = async(req: Request, res: Response, next: NextFunction) => {
   try{
     const {email, password} = req.body
     const user: any = await prisma.user.findUnique({

@@ -1,5 +1,5 @@
 import express from "express"
-import { getProducts, singleProduct } from "../controllers/productController.ts"
+import { getProducts, singleProduct } from "../controllers/productController.js"
 
 const router = express.Router()
 

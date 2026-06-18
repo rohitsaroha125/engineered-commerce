@@ -1,6 +1,7 @@
-import { prisma } from "../lib/prisma.ts";
+import { prisma } from "../lib/prisma.js";
+import { Request, Response, NextFunction } from "express";
 
-const getAllCategories = async(req, res, next) => {
+const getAllCategories = async(req: Request, res: Response, next: NextFunction) => {
     try{
         const categories = await prisma.category.findMany()
         res.status(200).json({
@@ -12,7 +13,7 @@ const getAllCategories = async(req, res, next) => {
     }
 }
 
-const getProductsByCategory = async(req, res, next) => {
+const getProductsByCategory = async(req: Request, res: Response, next: NextFunction) => {
     try{
         const {page, size} = req.query
         const {categoryId} = req.params
