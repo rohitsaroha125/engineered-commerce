@@ -42,6 +42,7 @@ services:
       - PORT=8010
       - DATABASE_URL=postgresql://rohit:secret123@db:5432/myapp
       - JWT_SECRET_KEY=hello_there_jwt_scret_see_this
+      - REDIS_URL=redis://redis:6379
     build: ./backend
     ports:
       - 8010:8010
@@ -66,7 +67,19 @@ services:
     volumes:
       - postgres_data:/postgres_data/db/data
 
+  redis:
+        image: redis:latest
+        ports:
+            - 6379:6379
+        volumes:
+            - redis-data:/data
+        environment:
+            - REDIS_ARGS=--requirepass your_password_here --appendonly yes
+        restart: unless-stopped
+
 volumes:
   postgres_data:
+  redis-data:
+        driver: local
 
   

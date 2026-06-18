@@ -1,5 +1,6 @@
 import { prisma } from "../lib/prisma.js";
 import { Request, Response, NextFunction } from "express";
+import { client } from "../app.js";
 
 const getProducts = async (req: Request, res: Response, next: NextFunction) => {
     try{
@@ -11,7 +12,11 @@ const getProducts = async (req: Request, res: Response, next: NextFunction) => {
         const pageNum = Number.isFinite(rawPage) && rawPage > 0 ? rawPage : 1;
         const sizeNum = Number.isFinite(rawSize) && rawSize > 0 ? rawSize : 10;
 
-        const searchStr = typeof search === "string" ? search : undefined;
+        const productPageKey = `Products_Page_Size:${rawPage}_${rawSize}`
+        const value = await client.get(productPageKey);
+
+        if (!value) {
+            const searchStr = typeof search === "string" ? search : undefined;
         const parsedCategory = typeof category === "string" ? Number(category) : NaN;
         const categoryId = Number.isFinite(parsedCategory) ? parsedCategory : undefined;
 
@@ -31,10 +36,18 @@ const getProducts = async (req: Request, res: Response, next: NextFunction) => {
             skip: (pageNum * sizeNum) - sizeNum
         })
 
+        await client.set(productPageKey, JSON.stringify(products));
+
         res.status(200).json({
             ok: true,
             products
         })
+        } else {
+            res.status(200).json({
+            ok: true,
+            products: value
+        })
+        }
     } catch(err) {
         next(err)
     }

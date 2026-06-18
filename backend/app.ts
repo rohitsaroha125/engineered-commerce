@@ -6,6 +6,7 @@ import categoryRoutes from "./routes/categoryRoutes.js"
 import orderRoutes from "./routes/orderRoutes.js"
 import { Request, Response, NextFunction } from "express";
 import { rateLimit } from 'express-rate-limit'
+import { createClient } from 'redis';
 
 const app = express();
 app.use(express.json());
@@ -16,8 +17,16 @@ app.use(
 );
 const port = process.env.PORT || 8010;
 
+const client = createClient({
+  url: process.env.REDIS_URL
+});
+
+client.on('error', err => console.log('Redis Client Error', err));
+
+await client.connect();
+
 const limiter = rateLimit({
-  limit: 2,
+  max: 200,
   windowMs: 15 * 60 * 1000,
   message: "Too many requests"
 })
@@ -45,6 +54,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   })
 })
 
+export {client}
 export default app;
 
 app.listen(port, () => {

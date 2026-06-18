@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "nodemon --exec node --loader ts-node/esm app.ts",
-    "start:prod": "prisma migrate deploy && node app.ts",
+    "start:prod": "prisma migrate deploy && tsx app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -24,6 +24,7 @@
     "jsonwebtoken": "^9.0.3",
     "nodemon": "^3.1.14",
     "pg": "^8.21.0",
+    "redis": "^6.0.0",
     "serverless-esbuild": "^1.57.2",
     "serverless-http": "^4.0.0"
   },
@@ -36,6 +37,7 @@
     "prisma": "^7.8.0",
     "serverless-dotenv-plugin": "^6.0.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   }
 }
