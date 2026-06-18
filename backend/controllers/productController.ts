@@ -45,7 +45,7 @@ const getProducts = async (req: Request, res: Response, next: NextFunction) => {
         } else {
             res.status(200).json({
             ok: true,
-            products: value
+            products: JSON.parse(value)
         })
         }
     } catch(err) {

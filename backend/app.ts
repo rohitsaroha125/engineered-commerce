@@ -26,7 +26,7 @@ client.on('error', err => console.log('Redis Client Error', err));
 await client.connect();
 
 const limiter = rateLimit({
-  max: 200,
+  limit: 100,
   windowMs: 15 * 60 * 1000,
   message: "Too many requests"
 })
