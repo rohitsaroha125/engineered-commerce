@@ -1,13 +1,10 @@
+from typing import Annotated
 from fastapi import FastAPI
 from pydantic import BaseModel, EmailStr
+from sqlmodel import SQLModel, create_engine, Session
 from routes.userRoutes import router as userRoutes
 
 app = FastAPI()
-
-class UserRegister(BaseModel):
-    name: str | None = None
-    email: EmailStr
-    password: str
 
 app.include_router(userRoutes)
 
