@@ -1,4 +1,5 @@
 import { Inter, Fraunces } from "next/font/google";
+import Header from "@/app/_components/Header";
 import "./globals.css";
 
 const inter = Inter({
@@ -21,7 +22,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
-      <body className="font-sans bg-bg text-ink antialiased">{children}</body>
+      <body className="font-sans bg-bg text-ink antialiased">
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
