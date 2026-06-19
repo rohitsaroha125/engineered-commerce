@@ -7,6 +7,7 @@ import orderRoutes from "./routes/orderRoutes.js"
 import { Request, Response, NextFunction } from "express";
 import { rateLimit } from 'express-rate-limit'
 import { createClient } from 'redis';
+import './jobs/updatePrices.js'
 
 const app = express();
 app.use(express.json());
