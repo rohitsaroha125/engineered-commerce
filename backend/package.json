@@ -7,6 +7,7 @@
     "build": "tsc",
     "start": "nodemon --exec node --loader ts-node/esm app.ts",
     "start:prod": "prisma migrate deploy && tsx app.ts",
+    "start:migration": "npx prisma migrate dev && npx prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

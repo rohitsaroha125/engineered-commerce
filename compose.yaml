@@ -15,7 +15,7 @@ services:
           action: rebuild
         - path: ./frontend
           target: /app
-          action: sync
+          action: sync+restart
 
   # admin:
   #   depends_on: 

@@ -42,7 +42,7 @@ export default function CategoriesDropdown({
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1 rounded-md px-2 py-1.5 text-sm font-medium text-ink transition-colors hover:text-accent"
+        className="flex items-center gap-1 rounded-md px-2 py-1.5 text-sm font-medium text-ink transition-colors hover:text-accent cursor-pointer"
       >
         Categories
         <svg
@@ -66,7 +66,7 @@ export default function CategoriesDropdown({
       {open && (
         <div
           role="menu"
-          className="absolute left-0 top-full z-20 mt-2 w-56 origin-top-left rounded-card border border-border bg-surface p-1.5 shadow-cardHover"
+          className="absolute left-0 top-full z-20 mt-2 w-56 origin-top-left rounded-card border border-border bg-white p-1.5 shadow-cardHover"
         >
           {categories.length === 0 ? (
             <p className="px-3 py-2 text-sm text-muted">No categories yet</p>

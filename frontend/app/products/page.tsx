@@ -19,8 +19,8 @@ export default async function Products() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://backend:8010";
 
   const [categoryResponse, productResponse] = await Promise.all([
-    fetch(`${API_URL}category/`),
-    fetch(`${API_URL}products?page=4&size=20`),
+    fetch(`${API_URL}category/`, { cache: "no-store" }),
+    fetch(`${API_URL}products?page=4&size=20`, { cache: "no-store" }),
   ]);
 
   // Fixed: .ok belongs to the Response object, not the parsed JSON body.
@@ -92,7 +92,10 @@ export default async function Products() {
                   key={product.id}
                   className="group relative overflow-hidden rounded-card border border-border bg-surface p-5 shadow-card transition-shadow hover:shadow-cardHover"
                 >
-                  <div className="mb-4 h-40 w-full overflow-hidden rounded bg-muted relative">
+                  <div
+                    className="mb-4 w-full overflow-hidden rounded bg-muted relative"
+                    style={{ height: 160 }} // explicit height so fill has space
+                  >
                     <Image
                       src={product?.image ?? "/assets/placeholder.jpg"}
                       alt={product.name}
