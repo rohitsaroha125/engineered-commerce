@@ -32,4 +32,12 @@ const addOrder = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const orderPayment = async(req: Request, res: Response, next: NextFunction) => {
+  try{
+    
+  } catch(err) {
+
+  }
+}
+
 export {addOrder}
