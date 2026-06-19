@@ -59,7 +59,7 @@ export {client}
 export default app;
 
 app.listen(port, () => {
-  console.log(`Running on port here ${port}`);
+  console.log(`Running on port ${port}`);
 });
 
 process.on("unhandledRejection", (err: {name: string, message: string}) => {

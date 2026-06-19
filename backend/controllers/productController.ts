@@ -71,4 +71,12 @@ const singleProduct = async (req: Request, res: Response, next: NextFunction) =>
     }
 }
 
-export {getProducts, singleProduct}
+const uploadProductImage = async (req: Request, res: Response, next: NextFunction) => {
+    try{
+
+    }catch(err){
+
+    }
+}
+
+export {getProducts, singleProduct, uploadProductImage}
