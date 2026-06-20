@@ -1,4 +1,5 @@
 import CategoriesDropdown from "./CategoriesDropdown";
+import Link from "next/link";
 
 interface Category {
   id: number;
@@ -57,45 +58,52 @@ export default async function Header() {
 
         {/* Nav */}
         <nav aria-label="Main" className="hidden items-center gap-1 sm:flex">
-          <a
+          <Link
             href="/"
             className="rounded-md px-3 py-1.5 text-sm font-medium text-ink transition-colors hover:text-accent"
           >
             Home
-          </a>
+          </Link>
           <CategoriesDropdown categories={categories} />
-          <a
+          <Link
             href="/products"
             className="rounded-md px-3 py-1.5 text-sm font-medium text-ink transition-colors hover:text-accent"
           >
             Products
-          </a>
+          </Link>
         </nav>
 
         {/* Cart */}
-        <a
-          href="/cart"
-          aria-label="View cart"
-          className="relative flex h-9 w-9 items-center justify-center rounded-full text-ink transition-colors hover:bg-bg hover:text-accent"
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
+        <div className="flex">
+          <Link
+            href="/cart"
+            aria-label="View cart"
+            className="relative flex h-9 w-9 items-center justify-center rounded-full text-ink transition-colors hover:bg-bg hover:text-accent mr-2"
           >
-            <path
-              d="M3 4H5L5.4 6M5.4 6H21L18.5 14H7.5L5.4 6Z"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <circle cx="9" cy="19" r="1.4" fill="currentColor" />
-            <circle cx="17" cy="19" r="1.4" fill="currentColor" />
-          </svg>
-        </a>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M3 4H5L5.4 6M5.4 6H21L18.5 14H7.5L5.4 6Z"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle cx="9" cy="19" r="1.4" fill="currentColor" />
+              <circle cx="17" cy="19" r="1.4" fill="currentColor" />
+            </svg>
+          </Link>
+          <Link href="/login">
+            <button className="rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-dark cursor-pointer">
+              Sign in
+            </button>
+          </Link>
+        </div>
       </div>
 
       {/* Mobile nav row */}
@@ -103,19 +111,19 @@ export default async function Header() {
         aria-label="Main mobile"
         className="flex items-center gap-1 overflow-x-auto border-t border-border px-6 py-2 sm:hidden"
       >
-        <a
+        <Link
           href="/"
           className="rounded-md px-3 py-1.5 text-sm font-medium text-ink"
         >
           Home
-        </a>
+        </Link>
         <CategoriesDropdown categories={categories} />
-        <a
+        <Link
           href="/products"
           className="rounded-md px-3 py-1.5 text-sm font-medium text-ink"
         >
           Products
-        </a>
+        </Link>
       </nav>
     </header>
   );
