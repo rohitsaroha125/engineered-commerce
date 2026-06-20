@@ -1,6 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { makeStore, AppStore } from "@/lib/store";
+import { updateProducts } from "@/lib/features/cartSlice";
+import { useDispatch } from "react-redux";
 
 interface Product {
   id: number;
@@ -16,6 +19,8 @@ const PLACEHOLDER_IMAGE = "/assets/placeholder.jpg";
 export default function ProductDetail({ product }: { product: Product }) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://backend:8010";
 
+  const storeRef = useRef<AppStore | null>(null);
+
   const [quantity, setQuantity] = useState(1);
   const [imageUrl, setImageUrl] = useState(
     `http://localhost:8010/${product.image}` || PLACEHOLDER_IMAGE
@@ -23,6 +28,7 @@ export default function ProductDetail({ product }: { product: Product }) {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [addedToCart, setAddedToCart] = useState(false);
+  const dispatch = useDispatch();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   function decrement() {
@@ -43,6 +49,11 @@ export default function ProductDetail({ product }: { product: Product }) {
     // UI-only for now — no cart state/API wired up yet.
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
+    const productToAdd = {
+      ...product,
+      qty: quantity,
+    };
+    dispatch(updateProducts(productToAdd));
   }
 
   async function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {

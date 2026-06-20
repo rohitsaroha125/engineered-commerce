@@ -1,4 +1,5 @@
 import { Inter, Fraunces } from "next/font/google";
+import StoreProvider from "./StoreProvider";
 import Header from "@/app/_components/Header";
 import "./globals.css";
 
@@ -23,8 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <body className="font-sans bg-bg text-ink antialiased">
-        <Header />
-        {children}
+        <StoreProvider>
+          <Header />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );
