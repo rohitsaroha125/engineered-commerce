@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface Category {
   id: number;
@@ -92,31 +93,33 @@ export default async function Products() {
                   key={product.id}
                   className="group relative overflow-hidden rounded-card border border-border bg-surface p-5 shadow-card transition-shadow hover:shadow-cardHover"
                 >
-                  <div
-                    className="mb-4 w-full overflow-hidden rounded bg-muted relative"
-                    style={{ height: 160 }} // explicit height so fill has space
-                  >
-                    <Image
-                      src={product?.image ?? "/assets/placeholder.jpg"}
-                      alt={product.name}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  {/* price sticker — signature element */}
-                  <div className="absolute -right-1 bottom-2 rotate-3 rounded-sm bg-accent-light px-2.5 py-1 text-sm font-semibold text-accent-dark shadow-sm">
-                    ₹{product.price.toLocaleString("en-IN")}
-                  </div>
+                  <Link href={`/products/${product.id}`}>
+                    <div
+                      className="mb-4 w-full overflow-hidden rounded bg-muted relative"
+                      style={{ height: 160 }} // explicit height so fill has space
+                    >
+                      <Image
+                        src={product?.image ?? "/assets/placeholder.jpg"}
+                        alt={product.name}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 33vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    {/* price sticker — signature element */}
+                    <div className="absolute -right-1 bottom-2 rotate-3 rounded-sm bg-accent-light px-2.5 py-1 text-sm font-semibold text-accent-dark shadow-sm">
+                      ₹{product.price.toLocaleString("en-IN")}
+                    </div>
 
-                  {category && (
-                    <p className="text-xs font-medium uppercase tracking-wide text-muted">
-                      {category.name}
-                    </p>
-                  )}
-                  <h2 className="mt-1 max-w-[80%] font-display text-lg font-medium leading-snug text-ink">
-                    {product.name}
-                  </h2>
+                    {category && (
+                      <p className="text-xs font-medium uppercase tracking-wide text-muted">
+                        {category.name}
+                      </p>
+                    )}
+                    <h2 className="mt-1 max-w-[80%] font-display text-lg font-medium leading-snug text-ink">
+                      {product.name}
+                    </h2>
+                  </Link>
                 </li>
               );
             })}

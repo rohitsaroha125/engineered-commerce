@@ -4,6 +4,7 @@ import userRoutes from "./routes/userRoutes.js";
 import productRoutes from "./routes/productRoutes.js"
 import categoryRoutes from "./routes/categoryRoutes.js"
 import orderRoutes from "./routes/orderRoutes.js"
+import redisRoutes from "./routes/redisRoutes.js"
 import { Request, Response, NextFunction } from "express";
 import { rateLimit } from 'express-rate-limit'
 import { createClient } from 'redis';
@@ -40,6 +41,7 @@ app.use("/user", userRoutes);
 app.use("/products", limiter, productRoutes)
 app.use("/category", categoryRoutes)
 app.use("/orders", orderRoutes)
+app.use("/redis", redisRoutes)
 
 app.use((req, res, next) => {
   const err: any = new Error("Route not found")
