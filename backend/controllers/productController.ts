@@ -2,6 +2,14 @@ import { prisma } from "../lib/prisma.js";
 import { Request, Response, NextFunction } from "express";
 import { client } from "../app.js";
 
+declare global {
+    namespace Express {
+        interface Request {
+            image?: string;
+        }
+    }
+}
+
 const getProducts = async (req: Request, res: Response, next: NextFunction) => {
     try{
         const {page, size, search, category} = req.query
@@ -73,9 +81,21 @@ const singleProduct = async (req: Request, res: Response, next: NextFunction) =>
 
 const uploadProductImage = async (req: Request, res: Response, next: NextFunction) => {
     try{
+        const {id} = req.params
+        console.log("reqis", req.file)
+        const imageUrl = `uploads/${req.file.filename}`;
+        const product = await prisma.product.update({
+            where: { id: Number(id) },
+            data: { image: imageUrl },
+        });
+
+        res.status(200).json({
+            ok: true,
+            product
+        })
 
     }catch(err){
-
+        next(err)
     }
 }
 

@@ -8,6 +8,7 @@ import redisRoutes from "./routes/redisRoutes.js"
 import { Request, Response, NextFunction } from "express";
 import { rateLimit } from 'express-rate-limit'
 import { createClient } from 'redis';
+import path from "path";
 import './jobs/updatePrices.js'
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(
     origin: "*",
   })
 );
+app.use("/uploads", express.static(path.join(import.meta.dirname, "uploads")));
 const port = process.env.PORT || 8010;
 
 const client = createClient({

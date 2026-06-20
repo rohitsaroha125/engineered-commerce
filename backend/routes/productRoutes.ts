@@ -6,6 +6,6 @@ const router = express.Router()
 
 router.get("/", getProducts)
 router.get("/:id", singleProduct)
-router.post("/upload-image/:id",  upload.single('image'), uploadProductImage)
+router.put("/upload-image/:id",  upload.single('image'), uploadProductImage)
 
 export default router

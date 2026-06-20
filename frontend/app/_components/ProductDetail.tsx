@@ -7,7 +7,7 @@ interface Product {
   name: string;
   price: number;
   categoryId: number;
-  imageUrl?: string | null;
+  image?: string | null;
   description?: string;
 }
 
@@ -18,7 +18,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
   const [quantity, setQuantity] = useState(1);
   const [imageUrl, setImageUrl] = useState(
-    product.imageUrl || PLACEHOLDER_IMAGE
+    `http://localhost:8010/${product.image}` || PLACEHOLDER_IMAGE
   );
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
@@ -60,10 +60,13 @@ export default function ProductDetail({ product }: { product: Product }) {
       const formData = new FormData();
       formData.append("image", file);
 
-      const res = await fetch(`${API_URL}products/${product.id}/image`, {
-        method: "POST",
-        body: formData,
-      });
+      const res = await fetch(
+        `http://localhost:8010/products/upload-image/${product.id}`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
 
       if (!res.ok) {
         throw new Error("Upload failed");
@@ -71,10 +74,11 @@ export default function ProductDetail({ product }: { product: Product }) {
 
       const data = await res.json();
       // Swap to the real hosted URL once the backend confirms it.
-      if (data.imageUrl) {
+      if (data.image) {
         setImageUrl(data.imageUrl);
       }
-    } catch {
+    } catch (err) {
+      console.log("Erroris", err);
       setUploadError("Couldn't upload image. Try again.");
       setImageUrl(product.imageUrl || PLACEHOLDER_IMAGE);
     } finally {
