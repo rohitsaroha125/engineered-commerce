@@ -2,6 +2,7 @@ from typing import Annotated, Generator
 from sqlmodel import Session, create_engine
 from fastapi import Depends
 from dotenv import load_dotenv
+import models
 import os
 
 load_dotenv()
