@@ -3,10 +3,24 @@ from fastapi import FastAPI
 from pydantic import BaseModel, EmailStr
 from sqlmodel import SQLModel, create_engine, Session
 from routes import router
+import subprocess
 
 app = FastAPI()
 
 app.include_router(router)
+
+# @app.on_event("startup")
+# def startup():
+#     subprocess.run(
+#         [
+#             "uv",
+#             "run",
+#             "alembic",
+#             "upgrade",
+#             "head"
+#         ],
+#         check=True
+#     )
 
 @app.get("/")
 async def hello():
