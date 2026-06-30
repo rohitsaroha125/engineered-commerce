@@ -4,6 +4,8 @@ from sqlmodel import select
 from models.product import Product
 from utils.db import SessionDep
 
+from utils.redis import redis_client
+
 import json
 
 
@@ -13,7 +15,6 @@ router = APIRouter(
 )
 
 
-# GET ALL PRODUCTS
 @router.get("/", status_code=status.HTTP_200_OK)
 def get_products(
     session: SessionDep,
@@ -23,24 +24,34 @@ def get_products(
     category: int | None = None
 ):
 
+    productPageKey = f"Products_Page_Size:{page}_{size}"
+
+    value = redis_client.get(productPageKey)
+
+
+    if value:
+
+        return {
+            "ok": True,
+            "products": json.loads(value)
+        }
+
+
     statement = select(Product)
 
 
-    # search filter
     if search:
         statement = statement.where(
             Product.name.ilike(f"%{search}%")
         )
 
 
-    # category filter
     if category:
         statement = statement.where(
             Product.categoryId == category
         )
 
 
-    # pagination
     statement = (
         statement
         .offset((page * size) - size)
@@ -49,6 +60,18 @@ def get_products(
 
 
     products = session.exec(statement).all()
+
+
+    redis_client.set(
+        productPageKey,
+        json.dumps(
+            [
+                product.model_dump(mode="json")
+                for product in products
+            ]
+        ),
+        ex=300
+    )
 
 
     return {

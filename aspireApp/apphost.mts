@@ -11,7 +11,7 @@ const api = await builder
     .withHttpEndpoint({
         port: 8010,
     })
-    // .withReference(db)
+    // .withReference(cache)
     .withExternalHttpEndpoints();
 
 await builder
