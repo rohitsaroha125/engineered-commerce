@@ -56,6 +56,25 @@ services:
           target: /app
           action: sync+restart
 
+  fastapi:
+    depends_on: 
+      - db
+    environment:
+      - PORT=8000
+      - DATABASE_URL=postgresql://rohit:secret123@db:5432/myapp
+      - JWT_SECRET_KEY=hello_there_jwt_scret_see_this
+      - REDIS_URL=redis://redis:6379
+    build: ./fastapi-backend
+    ports:
+      - 8011:8000
+    develop:
+      watch:
+        - path: ./fastapi-backend/pyproject.toml
+          action: rebuild
+        - path: ./fastapi-backend
+          target: /app
+          action: sync+restart
+
   db:
     image: postgres:latest
     environment:

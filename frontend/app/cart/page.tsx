@@ -31,8 +31,37 @@ export default function CartPage() {
     dispatch(removeItem(id));
   }
 
-  function handlePayNow() {
+  async function handlePayNow() {
     // Hook up checkout/payment flow here.
+    const token = localStorage.getItem("token"); // Retrieve the token from localStorage
+    const response = await fetch(`http://localhost:8010/payment/checkout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Include authentication token if required by your backend
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        items: products.map((item) => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.qty,
+        })),
+      }),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to initiate payment session");
+      return;
+    }
+
+    const data = await response.json();
+    if (data.url) {
+      window.location.href = data.url; // Redirect to Stripe Checkout
+    } else {
+      console.error("No checkout URL returned from server");
+    }
   }
 
   return (

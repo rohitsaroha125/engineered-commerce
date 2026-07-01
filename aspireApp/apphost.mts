@@ -12,7 +12,8 @@ const api = await builder
         port: 8010,
     })
     // .withReference(cache)
-    .withExternalHttpEndpoints();
+    .withExternalHttpEndpoints()
+;
 
 await builder
     .addViteApp('frontend', '../frontend/app')

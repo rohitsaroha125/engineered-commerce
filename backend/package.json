@@ -29,7 +29,8 @@
     "pg": "^8.21.0",
     "redis": "^6.0.0",
     "serverless-esbuild": "^1.57.2",
-    "serverless-http": "^4.0.0"
+    "serverless-http": "^4.0.0",
+    "stripe": "^22.3.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",

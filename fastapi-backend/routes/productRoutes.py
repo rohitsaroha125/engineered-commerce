@@ -30,13 +30,13 @@ def get_products(
 
 
     if value:
-
+        print("Cache Hit")
         return {
             "ok": True,
             "products": json.loads(value)
         }
 
-
+    print("Cache Miss")
     statement = select(Product)
 
 
